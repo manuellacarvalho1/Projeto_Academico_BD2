@@ -11,7 +11,7 @@ INSERT INTO tb_curso (id_curso, id_campus, codigo_curso, nome_curso, ativo_curso
 SELECT i, 1, 'CUR-' || i, 'Curso ' || i, true, 3000 
 FROM generate_series(1, 8) AS i;
 
--- gera 7 matrizes curriculares (uma para cada curso)
+-- gera 8 matrizes curriculares (uma para cada curso)
 INSERT INTO tb_curriculo (id_curriculo, id_curso, codigo_curriculo, ativo_curriculo) 
 SELECT i, i, 'IESB-' || i, true 
 FROM generate_series(1, 8) AS i;
@@ -40,10 +40,10 @@ INSERT INTO tb_pre_requisito (id_disciplina, id_disciplina_requisito, vinculo_pr
 
 -- 4. PERÍODO E PROFESSORES
 INSERT INTO tb_periodo_letivo (id_periodo_letivo, ano_periodo_letivo, semestre_periodo_letivo) VALUES (1, 2026, 1), (2, 2026, 2);
-INSERT INTO tb_professor (id_professor, nome_professor, matricula_professor, cpf_professor, email_professor) VALUES (1, 'Roberto', 'PROF-001', '11111111111', 'roberto@iesb.com');
+INSERT INTO tb_professor (id_professor, nome_professor, matricula_professor, cpf_professor, email_professor) VALUES (1, 'Rodrigo', 'PROF-001', '11111111111', 'roberto@iesb.com');
 
 
--- 5. INSERIR 300 ALUNOS DISTRIBUÍDOS PELOS 7 CURSOS
+-- 5. INSERIR 300 ALUNOS DISTRIBUÍDOS PELOS 8 CURSOS
 INSERT INTO tb_aluno (id_aluno, id_curriculo, id_curso, nome_aluno, matricula_aluno, cpf_aluno, email_aluno, ativo_aluno)
 SELECT 
     i, 
@@ -57,7 +57,7 @@ SELECT
 FROM generate_series(1, 300) AS i;
 
 
--- 6. INSERIR 7 TURMAS
+-- 6. INSERIR 8 TURMAS
 INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, codigo_turma, vagas_turma)
 SELECT i, (i % 3) + 1, 1, (i % 2) + 1, 'TURMA-00' || i, 50 
 FROM generate_series(1, 8) AS i;
