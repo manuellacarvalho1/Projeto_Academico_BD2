@@ -5,6 +5,7 @@ INSERT INTO tb_municipio (id_municipio, id_estado, nome_municipio) VALUES (1, 1,
 INSERT INTO tb_cidade (id_cidade, id_municipio, nome_cidade) VALUES (1, 1, 'Brasília');
 INSERT INTO tb_campus (id_campus, id_cidade, codigo_campus, nome_campus) VALUES (1, 1, 'CAMP-0110', 'Campus Asa Sul');
 
+
 -- 2. CRIAR 8 CURSOS E 8 CURRÍCULOS
 -- gera os cursos automaticamente
 INSERT INTO tb_curso (id_curso, id_campus, codigo_curso, nome_curso, ativo_curso, ch_total_curso) 
