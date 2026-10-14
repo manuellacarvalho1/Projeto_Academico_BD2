@@ -212,39 +212,39 @@ FROM generate_series(1, 21) AS i;
 
 INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, codigo_turma, turno_turma, vagas_turma, capacidade_turma) VALUES
 -- 1. Ciência da Computação (Professores 1, 2 e 3)
-(1, 1, 1, 2, 'TURMA-CC-A', 'Matutino', 25, '30'),
-(2, 2, 2, 2, 'TURMA-CC-B', 'Vespertino', 12, '30'),
-(3, 3, 3, 2, 'TURMA-CC-C', 'Noturno', 8, '30'),
+(1, 1, 1, 2, 'TURMA-CC-A', 'Matutino', 10, '20'),
+(2, 2, 2, 2, 'TURMA-CC-B', 'Vespertino', 6, '20'),
+(3, 3, 3, 2, 'TURMA-CC-C', 'Noturno', 4, '20'),
 
 -- 2. Direito (Professores 4, 5 e 6)
-(4, 7, 4, 2, 'TURMA-DIR-A', 'Matutino', 12, '20'),
-(5, 8, 5, 2, 'TURMA-DIR-B', 'Vespertino', 10, '20'),
-(6, 9, 6, 2, 'TURMA-DIR-C', 'Noturno', 6, '20'),
+(4, 7, 4, 2, 'TURMA-DIR-A', 'Matutino', 11, '20'),
+(5, 8, 5, 2, 'TURMA-DIR-B', 'Vespertino', 9, '20'),
+(6, 9, 6, 2, 'TURMA-DIR-C', 'Noturno', 0, '20'),
 
 -- 3. Gastronomia (Professores 7, 8 e 9)
-(7, 13, 7, 2, 'TURMA-GAS-A', 'Matutino', 11, '20',
-(8, 14, 8, 2, 'TURMA-GAS-B', 'Vespertino', 9, '20'),
+(7, 13, 7, 2, 'TURMA-GAS-A', 'Matutino', 8, '20',
+(8, 14, 8, 2, 'TURMA-GAS-B', 'Vespertino', 8, '20'),
 (9, 15, 9, 2, 'TURMA-GAS-C', 'Noturno', 4, '20'),
 
 -- 4. Engenharia Civil (Professores 10, 11 e 12)
-(10, 19, 10, 2, 'TURMA-ENG-A', 'Matutino', 18, '20'),
-(11, 20, 11, 2, 'TURMA-ENG-B', 'Vespertino', 15, '20'),
-(12, 21, 12, 2, 'TURMA-ENG-C', 'Noturno', 7, '20'),
+(10, 19, 10, 2, 'TURMA-ENG-A', 'Matutino', 9, '20'),
+(11, 20, 11, 2, 'TURMA-ENG-B', 'Vespertino', 9, '20'),
+(12, 21, 12, 2, 'TURMA-ENG-C', 'Noturno', 2, '20'),
 
 -- 5. Medicina (Professores 13, 14 e 15)
-(13, 25, 13, 2, 'TURMA-MED-A', 'Integral', 30, '30'),
-(14, 26, 14, 2, 'TURMA-MED-B', 'Integral', 30, '30'),
-(15, 27, 15, 2, 'TURMA-MED-C', 'Integral', 30, '30'),
+(13, 25, 13, 2, 'TURMA-MED-A', 'Integral', 20, '20'),
+(14, 26, 14, 2, 'TURMA-MED-B', 'Integral', 20, '20'),
+(15, 27, 15, 2, 'TURMA-MED-C', 'Integral', 20, '20'),
 
 -- 6. Educação Física (Professores 16, 17 e 18)
-(16, 31, 16, 2, 'TURMA-EDF-A', 'Matutino', 15, '20'),
-(17, 32, 17, 2, 'TURMA-EDF-B', 'Vespertino', 14, '20'),
-(18, 33, 18, 2, 'TURMA-EDF-C', 'Noturno', 5, '20'),
+(16, 31, 16, 2, 'TURMA-EDF-A', 'Matutino', 7, '20'),
+(17, 32, 17, 2, 'TURMA-EDF-B', 'Vespertino', 13, '20'),
+(18, 33, 18, 2, 'TURMA-EDF-C', 'Noturno', 0, '20'),
 
 -- 7. Ciências Econômicas (Professores 19, 20 e 21)
-(19, 37, 19, 2, 'TURMA-ECO-A', 'Matutino', 27, '30'),
-(20, 38, 20, 2, 'TURMA-ECO-B', 'Vespertino', 18, '30'),
-(21, 39, 21, 2, 'TURMA-ECO-C', 'Noturno', 15, '30');
+(19, 37, 19, 2, 'TURMA-ECO-A', 'Matutino', 7, '20'),
+(20, 38, 20, 2, 'TURMA-ECO-B', 'Vespertino', 7, '20'),
+(21, 39, 21, 2, 'TURMA-ECO-C', 'Noturno', 6, '20');
 
 
 
