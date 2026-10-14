@@ -3,9 +3,27 @@ INSERT INTO tb_estado (id_estado, id_pais, nome_estado, uf_estado) VALUES (1, 1,
 INSERT INTO tb_municipio (id_municipio, id_estado, nome_municipio) VALUES (1, 1, 'Brasília-Asa Sul');
 INSERT INTO tb_cidade (id_cidade, id_municipio, nome_cidade) VALUES (1, 1, 'Brasília');
 INSERT INTO tb_campus (id_campus, id_cidade, codigo_campus, nome_campus) VALUES (1, 1, 'CAMP-0110', 'Campus Asa Sul');
-INSERT INTO tb_salas
-INSERT INTO tb_predio
-INSERT INTO tb_bloco
+INSERT INTO tb_predio (id_predio, id_campus, nome_predio, codigo_predio) VALUES 
+(1, 1, 'Prédio 1', 'PREDIO-01'), 
+(2, 1, 'Prédio 2', 'PREDIO-02'), 
+(3, 1, 'Prédio 3', 'PREDIO-03'),
+(4, 1, 'Prédio 4', 'PREDIO-04');
+INSERT INTO tb_bloco (id_bloco, id_predio, nome_bloco, codigo_bloco) VALUES 
+(1, 1, 'Bloco A', 'BLOCO-A'),
+(2, 2, 'Bloco B', 'BLOCO-B'),
+(3, 2, 'Bloco C', 'BLOCO-C'),
+(4, 2, 'Bloco D', 'BLOCO-D'),
+(5, 3, 'Bloco E', 'BLOCO-E'),
+(6, 3, 'Bloco F', 'BLOCO-F'),
+(7, 4, 'Bloco G', 'BLOCO-G');
+INSERT INTO tb_sala (id_sala, id_bloco, codigo_sala, nome_sala, numero_sala, tipo_sala, capacidade_sala) VALUES
+(1, 7, 'SL-CC-01',  'Laboratório de Informática Avançada', '741', 'Laboratório', 40),
+(2, 5, 'SL-DIR-01', 'Sala de Aula Teórica', '531', 'Teórica', 40),
+(3, 3, 'SL-GAS-01', 'Cozinha Industrial', '321', 'Prática', 40),
+(4, 7, 'SL-ENG-01', 'Laboratório de Engenharia', '742', 'Laboratório', 40),
+(5, 7, 'SL-MED-01', 'Laboratório de Anatomia Humana', '743', 'Laboratório', 40),
+(6, 2, 'SL-EDF-01', 'Quadra Poliesportiva Coberta', '221', 'Prática', 40),
+(7, 5, 'SL-ECO-01', 'Sala de Aula Teórica', '532', 'Teórica', 40);
 
 INSERT INTO tb_curso (id_curso, id_campus, codigo_curso, nome_curso, grau_curso, modalidade_curso, duracao_curso, ativo_curso, ch_total_curso) VALUES 
 (1, 1, 'CC01', 'Ciência da Computação', 'Bacharelado', 'Presencial', 4, TRUE, 3000),
@@ -249,16 +267,68 @@ SELECT
     'Ativo'
 FROM generate_series(1, 215) AS i;
 
+INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_turma_horario, horario_inicio_turma_horario, horario_fim_turma_horario) VALUES
+-- 1. Ciência da Computação
+(1, 1, 1, 'Segunda', '08:15:00', '11:00:00'), 
+(2, 1, 1, 'Quarta',  '08:15:00', '11:00:00'),
+(3, 2, 1, 'Segunda', '14:15:00', '17:00:00'), 
+(4, 2, 1, 'Quarta',  '14:15:00', '17:00:00'),
+(5, 3, 1, 'Segunda', '19:15:00', '22:00:00'), 
+(6, 3, 1, 'Quarta',  '19:15:00', '22:00:00'),
 
+-- 2. Direito 
+(7, 4, 2, 'Terca',   '08:15:00', '11:00:00'), 
+(8, 4, 2, 'Quinta',  '08:15:00', '11:00:00'),
+(9, 5, 2, 'Terca',   '14:15:00', '17:00:00'), 
+(10, 5, 2, 'Quinta', '14:15:00', '17:00:00'),
+(11, 6, 2, 'Terca',  '19:15:00', '22:00:00'), 
+(12, 6, 2, 'Quinta', '19:15:00', '22:00:00'),
+
+-- 3. Gastronomia
+(13, 7, 3, 'Segunda', '08:15:00', '11:00:00'),
+(14, 7, 3, 'Quarta',  '08:15:00', '11:00:00'),
+(15, 8, 3, 'Segunda', '14:15:00', '17:00:00'), 
+(16, 8, 3, 'Quarta',  '14:15:00', '17:00:00'),
+(17, 9, 3, 'Segunda', '19:15:00', '22:00:00'), 
+(18, 9, 3, 'Quarta',  '19:15:00', '22:00:00'),
+
+-- 4. Engenharia Civil 
+(19, 10, 4, 'Terca',   '08:15:00', '11:00:00'), 
+(20, 10, 4, 'Quinta',  '08:15:00', '11:00:00'),
+(21, 11, 4, 'Terca',   '14:15:00', '17:00:00'), 
+(22, 11, 4, 'Quinta',  '14:15:00', '17:00:00'),
+(23, 12, 4, 'Terca',   '19:15:00', '22:00:00'), 
+(24, 12, 4, 'Quinta',  '19:15:00', '22:00:00'),
+
+-- 5. Medicina
+(25, 13, 5, 'Segunda', '08:15:00', '17:00:00'), 
+(26, 13, 5, 'Segunda', '08:15:00', '17:00:00'),
+(27, 14, 5, 'Terca',   '08:15:00', '17:00:00'), 
+(28, 14, 5, 'Terca',   '08:15:00', '17:00:00'),
+(29, 15, 5, 'Quarta',  '08:15:00', '17:00:00'), 
+(30, 15, 5, 'Quarta',  '08:15:00', '17:00:00'),
+
+-- 6. Educação Física 
+(31, 16, 6, 'Segunda', '08:15:00', '10:00:00'), 
+(32, 16, 6, 'Quarta',  '08:15:00', '10:00:00'),
+(33, 17, 6, 'Segunda', '14:15:00', '16:00:00'), 
+(34, 17, 6, 'Quarta',  '14:15:00', '16:00:00'),
+(35, 18, 6, 'Segunda', '19:15:00', '21:00:00'),
+(36, 18, 6, 'Quarta',  '19:15:00', '21:00:00'),
+
+-- 7. Ciências Econômicas 
+(37, 19, 7, 'Terca',   '08:15:00', '11:00:00'), 
+(38, 19, 7, 'Quinta',  '08:15:00', '11:00:00'),
+(39, 20, 7, 'Terca',   '14:15:00', '17:00:00'), 
+(40, 20, 7, 'Quinta',  '14:15:00', '17:00:00'),
+(41, 21, 7, 'Terca',   '19:15:00', '22:00:00'), 
+(42, 21, 7, 'Quinta',  '19:15:00', '22:00:00');
 
 -- TABELAS QUE FALTAM
 
-3. tb_matriculas
+
 4. tb_historico
-5. tb_sala
-6. tb_bloco
-7. tb_predio
-8. tb_turma_horario
+
 
 -- 7. INSERIR 300 MATRÍCULAS E HISTÓRICOS
 INSERT INTO tb_matricula (id_matricula, id_aluno, id_turma, data_matricula, status_matricula)
