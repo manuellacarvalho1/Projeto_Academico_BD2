@@ -206,7 +206,7 @@ SELECT
     'PROF' || i,
     LPAD(i::text, 11, '0'),
     'prof' || i || '@iesb.br',
-    '619811100' || LPAD(i::text, 2, '0'),
+    '61999125' || LPAD(i::text, 2, '0'),
     'Mestre'
 FROM generate_series(1, 21) AS i;
 
@@ -246,11 +246,8 @@ INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, 
 (20, 38, 20, 2, 'TURMA-ECO-B', 'Vespertino', 7, '20'),
 (21, 39, 21, 2, 'TURMA-ECO-C', 'Noturno', 6, '20');
 
-
-
 -- TABELAS QUE FALTAM
 
-1. tb_professores
 2. tb_alunos
 3. tb_matriculas
 4. tb_historico
