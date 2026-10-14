@@ -248,13 +248,17 @@ INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, 
 
 
 
+-- TABELAS QUE FALTAM
 
+1. tb_professores
+2. tb_alunos
+3. tb_matriculas
+4. tb_historico
+5. tb_sala
+6. tb_bloco
+7. tb_predio
+8. tb_turma_horario
 
-
-
-
-
--- 5. INSERIR 300 ALUNOS DISTRIBUÍDOS PELOS 8 CURSOS
 INSERT INTO tb_aluno (id_aluno, id_curriculo, id_curso, nome_aluno, matricula_aluno, cpf_aluno, email_aluno, ativo_aluno)
 SELECT 
     i, 
@@ -266,12 +270,6 @@ SELECT
     'aluno' || i || '@iesb.com', 
     true
 FROM generate_series(1, 300) AS i;
-
-
--- 6. INSERIR 8 TURMAS
-INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, codigo_turma, vagas_turma)
-SELECT i, (i % 3) + 1, 1, (i % 2) + 1, 'TURMA-00' || i, 50 
-FROM generate_series(1, 8) AS i;
 
 
 -- 7. INSERIR 300 MATRÍCULAS E HISTÓRICOS
