@@ -232,7 +232,7 @@ INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, 
 -- 4. Engenharia Civil (Professores 10, 11 e 12)
 (10, 19, 10, 2, 'TURMA-ENG-A', 'Matutino', 19, '30'),
 (11, 20, 11, 2, 'TURMA-ENG-B', 'Vespertino', 6, '30'),
-(12, 21, 12, 2, 'TURMA-ENG-C', 'Noturno', 4, '30'),
+(12, 21, 12, 2, 'TURMA-ENG-C', 'Noturno', 5, '30'),
 
 -- 5. Medicina (Professores 13, 14 e 15)
 (13, 25, 13, 2, 'TURMA-MED-A', 'Integral', 10, '30'),
