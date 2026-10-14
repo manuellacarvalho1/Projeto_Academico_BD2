@@ -172,47 +172,83 @@ INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, 
 (21, 39, 21, 2, 'TURMA-ECO-C', 'Noturno', 6, '30');
 
 INSERT INTO tb_aluno (
-    id_aluno,
-    id_curriculo,
-    id_curso,
-    nome_aluno,
-    matricula_aluno,
-    cpf_aluno,
-    email_aluno,
-    telefone_aluno,
-    data_nascimento_aluno,
-    ingresso_aluno,
-    ativo_aluno
+    id_aluno, 
+	id_curriculo, 
+	id_curso, 
+	nome_aluno, 
+	matricula_aluno, 
+    cpf_aluno, 
+	email_aluno, 
+	telefone_aluno, 
+	data_nascimento_aluno, 
+	ingresso_aluno, 
+	ativo_aluno
 )
 SELECT 
     i,
     CASE 
-        WHEN i <= 30 THEN 1  
-        WHEN i <= 50 THEN 2  
-        WHEN i <= 74 THEN 3 
-        WHEN i <= 89 THEN 4  
-        WHEN i <= 119 THEN 5 
-        WHEN i <= 159 THEN 6 
+        WHEN i <= 30 THEN 1 
+        WHEN i <= 60 THEN 2  
+        WHEN i <= 90 THEN 3  
+        WHEN i <= 120 THEN 4 
+        WHEN i <= 150 THEN 5
+        WHEN i <= 180 THEN 6 
         ELSE 7               
     END,
     CASE 
         WHEN i <= 30 THEN 1 
-        WHEN i <= 50 THEN 2  
-        WHEN i <= 74 THEN 3  
-        WHEN i <= 89 THEN 4  
-        WHEN i <= 119 THEN 5 
-        WHEN i <= 159 THEN 7 
-        ELSE 8              
+        WHEN i <= 60 THEN 2 
+        WHEN i <= 90 THEN 3 
+        WHEN i <= 120 THEN 4 
+        WHEN i <= 150 THEN 5 
+        WHEN i <= 180 THEN 7 
+        ELSE 8               
     END,
     'Aluno ' || i,
     '2512130' || LPAD(i::text, 3, '0'),
     LPAD(i::text, 11, '1'),
     'aluno' || i || '@iesb.edu.br', 
     '61998641' || LPAD(i::text, 3, '0'),
-    '2000-01-01'::DATE + i, 
-    '2026-02-01',           
+    '2000-01-01'::DATE + i,
+    '2026-02-01',
     TRUE
-FROM generate_series(1, 180) AS i;
+FROM generate_series(1, 215) AS i;
+
+INSERT INTO tb_matricula (
+	id_matricula, 
+	id_aluno, 
+	id_turma, 
+	data_matricula, 
+	status_matricula
+)
+SELECT 
+    i, 
+    i, 
+    CASE 
+        WHEN i <= 15 THEN 1  
+        WHEN i <= 23 THEN 2 
+        WHEN i <= 30 THEN 3  
+        WHEN i <= 41 THEN 4  
+        WHEN i <= 50 THEN 5  
+        WHEN i <= 60 THEN 6  
+        WHEN i <= 72 THEN 7  
+        WHEN i <= 90 THEN 8  
+        WHEN i <= 109 THEN 10 
+        WHEN i <= 115 THEN 11 
+        WHEN i <= 120 THEN 12 
+        WHEN i <= 130 THEN 13 
+        WHEN i <= 140 THEN 14 
+        WHEN i <= 150 THEN 15 
+        WHEN i <= 167 THEN 16 
+        WHEN i <= 180 THEN 17 
+        WHEN i <= 195 THEN 19 
+        WHEN i <= 209 THEN 20
+        ELSE 21               
+    END,
+    '2026-02-01', 
+    'Ativo'
+FROM generate_series(1, 215) AS i;
+
 
 
 -- TABELAS QUE FALTAM
