@@ -205,7 +205,7 @@ SELECT
     'Professor ' || i,
     'PROF' || i,
     LPAD(i::text, 11, '0'),
-    'prof' || i || '@iesb.br',
+    'prof' || i || '@iesb.edu.br',
     '61999125' || LPAD(i::text, 2, '0'),
     'Mestre'
 FROM generate_series(1, 21) AS i;
