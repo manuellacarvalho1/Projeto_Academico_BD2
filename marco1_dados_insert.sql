@@ -269,72 +269,86 @@ FROM generate_series(1, 215) AS i;
 
 INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_turma_horario, horario_inicio_turma_horario, horario_fim_turma_horario) VALUES
 -- 1. Ciência da Computação
+-- MATUTINO
 (1, 1, 1, 'Segunda', '08:15:00', '11:00:00'), 
 (2, 1, 1, 'Quarta',  '08:15:00', '11:00:00'),
+- VESPERTINO
 (3, 2, 1, 'Segunda', '14:15:00', '17:00:00'), 
 (4, 2, 1, 'Quarta',  '14:15:00', '17:00:00'),
+-- NOTURNO
 (5, 3, 1, 'Segunda', '19:15:00', '22:00:00'), 
 (6, 3, 1, 'Quarta',  '19:15:00', '22:00:00'),
 
 -- 2. Direito 
+-- MATUTINO
 (7, 4, 2, 'Terca',   '08:15:00', '11:00:00'), 
 (8, 4, 2, 'Quinta',  '08:15:00', '11:00:00'),
+-- VESPERTINO
 (9, 5, 2, 'Terca',   '14:15:00', '17:00:00'), 
 (10, 5, 2, 'Quinta', '14:15:00', '17:00:00'),
+-- NOTURNO
 (11, 6, 2, 'Terca',  '19:15:00', '22:00:00'), 
 (12, 6, 2, 'Quinta', '19:15:00', '22:00:00'),
 
 -- 3. Gastronomia
+-- MATUTINO
 (13, 7, 3, 'Segunda', '08:15:00', '11:00:00'),
 (14, 7, 3, 'Quarta',  '08:15:00', '11:00:00'),
+-- VESPERTINO
 (15, 8, 3, 'Segunda', '14:15:00', '17:00:00'), 
 (16, 8, 3, 'Quarta',  '14:15:00', '17:00:00'),
+-- NOTURNO
 (17, 9, 3, 'Segunda', '19:15:00', '22:00:00'), 
 (18, 9, 3, 'Quarta',  '19:15:00', '22:00:00'),
 
 -- 4. Engenharia Civil 
+-- MATUTINO
 (19, 10, 4, 'Terca',   '08:15:00', '11:00:00'), 
 (20, 10, 4, 'Quinta',  '08:15:00', '11:00:00'),
+-- VESPERTINO
 (21, 11, 4, 'Terca',   '14:15:00', '17:00:00'), 
 (22, 11, 4, 'Quinta',  '14:15:00', '17:00:00'),
+-- NOTURNO
 (23, 12, 4, 'Terca',   '19:15:00', '22:00:00'), 
 (24, 12, 4, 'Quinta',  '19:15:00', '22:00:00'),
 
 -- 5. Medicina
+-- INTEGRAL
 (25, 13, 5, 'Segunda', '08:15:00', '17:00:00'), 
-(26, 13, 5, 'Segunda', '08:15:00', '17:00:00'),
-(27, 14, 5, 'Terca',   '08:15:00', '17:00:00'), 
-(28, 14, 5, 'Terca',   '08:15:00', '17:00:00'),
-(29, 15, 5, 'Quarta',  '08:15:00', '17:00:00'), 
-(30, 15, 5, 'Quarta',  '08:15:00', '17:00:00'),
+(26, 13, 5, 'Terça', '08:15:00', '17:00:00'),
+(27, 14, 5, 'Segunda',   '08:15:00', '17:00:00'), 
+(28, 14, 5, 'Terça',   '08:15:00', '17:00:00'),
+(29, 15, 5, 'Segunda',  '08:15:00', '17:00:00'), 
+(30, 15, 5, 'Terça',  '08:15:00', '17:00:00'),
 
--- 6. Educação Física 
-(31, 16, 6, 'Segunda', '08:15:00', '10:00:00'), 
+-- 6. Educação Física
+-- MATUTINO
+(31, 16, 6, 'Segunda', '08:15:00', '10:00:00'),
 (32, 16, 6, 'Quarta',  '08:15:00', '10:00:00'),
+-- VESPERTINO
 (33, 17, 6, 'Segunda', '14:15:00', '16:00:00'), 
 (34, 17, 6, 'Quarta',  '14:15:00', '16:00:00'),
+-- NOTURNO
 (35, 18, 6, 'Segunda', '19:15:00', '21:00:00'),
 (36, 18, 6, 'Quarta',  '19:15:00', '21:00:00'),
 
--- 7. Ciências Econômicas 
+-- 7. Ciências Econômicas
+-- MATUTINO
 (37, 19, 7, 'Terca',   '08:15:00', '11:00:00'), 
 (38, 19, 7, 'Quinta',  '08:15:00', '11:00:00'),
+-- VESPERTINO
 (39, 20, 7, 'Terca',   '14:15:00', '17:00:00'), 
 (40, 20, 7, 'Quinta',  '14:15:00', '17:00:00'),
+-- NOTURNO
 (41, 21, 7, 'Terca',   '19:15:00', '22:00:00'), 
 (42, 21, 7, 'Quinta',  '19:15:00', '22:00:00');
 
--- TABELAS QUE FALTAM
 
 
+TABELAS QUE FALTAM
 4. tb_historico
 
 
--- 7. INSERIR 300 MATRÍCULAS E HISTÓRICOS
-INSERT INTO tb_matricula (id_matricula, id_aluno, id_turma, data_matricula, status_matricula)
-SELECT ROW_NUMBER() OVER () AS id_matricula, a.id_aluno, t.id_turma, CURRENT_DATE, 'Concluída'
-FROM tb_aluno a 
-CROSS JOIN (SELECT id_turma FROM tb_turma LIMIT 3) t;
 
 INSERT INTO tb_historico (id_historico, id_matricula, situacao_historico, media_final_historico)
 SELECT id_matricula, id_matricula, 'Aprovado'::situacao_t, CAST(7.0 + ((id_matricula % 30) / 10.0) AS NUMERIC(4,2))
