@@ -343,13 +343,23 @@ INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_tu
 (41, 21, 7, 'Terca',   '19:15:00', '22:00:00'), 
 (42, 21, 7, 'Quinta',  '19:15:00', '22:00:00');
 
+INSERT INTO tb_historico (
+	id_historico,
+    id_matricula,
+    nota_p1_historico,
+    nota_p2_historico,
+    nota_p3_historico,
+    frequencia_historico,
+    situacao_historico,
+    media_final_historico,
+) 
+SELECT 
+	i,
+	i,
+		
 
 
-TABELAS QUE FALTAM
-4. tb_historico
 
 
 
-INSERT INTO tb_historico (id_historico, id_matricula, situacao_historico, media_final_historico)
-SELECT id_matricula, id_matricula, 'Aprovado'::situacao_t, CAST(7.0 + ((id_matricula % 30) / 10.0) AS NUMERIC(4,2))
-FROM tb_matricula;
+
