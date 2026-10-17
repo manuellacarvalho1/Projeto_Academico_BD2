@@ -224,7 +224,7 @@ SELECT
     END,
     'Aluno ' || i,
     '2512130' || LPAD(i::text, 3, '0'),
-    LPAD(i::text, 11, '1'),
+    '20' || LPAD(i::text, 8, '0'),
     'aluno' || i || '@iesb.edu.br', 
     '61998641' || LPAD(i::text, 3, '0'),
     '2000-01-01'::DATE + i,
