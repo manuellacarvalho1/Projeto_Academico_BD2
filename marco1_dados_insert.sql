@@ -392,7 +392,7 @@ SELECT
         WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN 'Aprovado'
         WHEN GREATEST(0.4 * p3 + 0.6 * p2, 0.4 * p1 + 0.6 * p3) >= 5.0 THEN 'Aprovado'
         ELSE 'Reprovado por Nota'
-    END,
+    END::situacao_t,
     CASE 
         WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN ROUND((0.4 * p1 + 0.6 * p2), 2)
         ELSE ROUND(GREATEST(0.4 * p3 + 0.6 * p2, 0.4 * p1 + 0.6 * p3), 2)
