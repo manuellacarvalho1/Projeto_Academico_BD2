@@ -263,9 +263,33 @@ SELECT
         WHEN i <= 209 THEN 20
         ELSE 21               
     END,
-    '2026-02-01', 
+    '2026-08-01', 
     'Ativo'
 FROM generate_series(1, 215) AS i;
+
+INSERT INTO tb_matricula (
+	id_matricula, 
+	id_aluno,
+	id_turma, 
+	data_matricula,
+	status_matricula
+) 
+SELECT 
+	i + 300,
+	i,
+CASE
+	WHEN i <= 10 THEN 21
+	WHEN i <= 25 THEN 3
+	WHEN i <= 35 THEN 20
+	WHEN i <= 50 THEN 12
+	WHEN i <= 60 THEN 16
+	WHEN i <= 73 THEN 2
+	WHEN i <= 90 THEN 6
+	ELSE 17
+END, 
+	'2026-08-01',
+	'Ativo'
+FROM generate_series(1, 100) AS i;
 
 INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_turma_horario, horario_inicio_turma_horario, horario_fim_turma_horario) VALUES
 -- 1. Ciência da Computação
@@ -344,18 +368,45 @@ INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_tu
 (42, 21, 7, 'Quinta',  '19:15:00', '22:00:00');
 
 INSERT INTO tb_historico (
-	id_historico,
+    id_historico,
     id_matricula,
     nota_p1_historico,
     nota_p2_historico,
     nota_p3_historico,
     frequencia_historico,
     situacao_historico,
-    media_final_historico,
-) 
+    media_final_historico
+)
 SELECT 
-	i,
-	i,
+    i, 
+    i,
+    p1, 
+    p2,
+    CASE 
+        WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN NULL 
+        ELSE p3 
+    END,  
+    frequencia,
+    CASE 
+        WHEN frequencia < 75 THEN 'Reprovado por Falta'
+        WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN 'Aprovado'
+        WHEN GREATEST(0.4 * p3 + 0.6 * p2, 0.4 * p1 + 0.6 * p3) >= 5.0 THEN 'Aprovado'
+        ELSE 'Reprovado por Nota'
+    END,
+    CASE 
+        WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN ROUND((0.4 * p1 + 0.6 * p2), 2)
+        ELSE ROUND(GREATEST(0.4 * p3 + 0.6 * p2, 0.4 * p1 + 0.6 * p3), 2)
+    END   
+FROM (
+    SELECT 
+        i,
+        ROUND((random() * 10)::numeric, 2) AS p1,
+        ROUND((random() * 10)::numeric, 2) AS p2,
+        ROUND((random() * 10)::numeric, 2) AS p3,
+        ROUND((random() * 30 + 70)::numeric, 2) AS frequencia
+    FROM generate_series(1, 315) AS i
+) AS notas;
+
 		
 
 
