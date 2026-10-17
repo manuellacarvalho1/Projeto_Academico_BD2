@@ -1,6 +1,6 @@
 CREATE DOMAIN nota_t AS NUMERIC(4,2) CHECK (VALUE >= 0 AND VALUE <= 10);
 CREATE DOMAIN pct_t AS NUMERIC(5,2) CHECK (VALUE >= 0 AND VALUE <= 100);
-CREATE TYPE situacao_t AS ENUM ('Aprovado', 'Reprovado', 'Trancado');
+CREATE TYPE situacao_t AS ENUM ('Aprovado', 'Reprovado por nota', 'Trancado', 'Reprovado por falta');
 CREATE TYPE tipo_usuario_t AS ENUM ('Administrador', 'Professor', 'Aluno', 'Secretaria');
 CREATE TYPE vinculo_r AS ENUM ('Pré-requisito', 'Co-requisito', 'Recomendado');
 
