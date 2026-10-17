@@ -155,39 +155,39 @@ FROM generate_series(1, 21) AS i;
 
 INSERT INTO tb_turma (id_turma, id_disciplina, id_professor, id_periodo_letivo, codigo_turma, turno_turma, vagas_turma, capacidade_turma) VALUES
 -- 1. Ciência da Computação (Professores 1, 2 e 3)
-(1, 1, 1, 2, 'TURMA-CC-A', 'Matutino', 15, '30'),
-(2, 2, 2, 2, 'TURMA-CC-B', 'Vespertino', 8, '30'),
-(3, 3, 3, 2, 'TURMA-CC-C', 'Noturno', 7, '30'),
+(1, 1, 1, 1, 'TURMA-CC-A', 'Matutino', 15, '30'),
+(2, 2, 2, 1, 'TURMA-CC-B', 'Vespertino', 8, '30'),
+(3, 3, 3, 1, 'TURMA-CC-C', 'Noturno', 7, '30'),
 
 -- 2. Direito (Professores 4, 5 e 6)
-(4, 7, 4, 2, 'TURMA-DIR-A', 'Matutino', 11, '30'),
-(5, 8, 5, 2, 'TURMA-DIR-B', 'Vespertino', 9, '30'),
-(6, 9, 6, 2, 'TURMA-DIR-C', 'Noturno', 10, '30'),
+(4, 7, 4, 1, 'TURMA-DIR-A', 'Matutino', 11, '30'),
+(5, 8, 5, 1, 'TURMA-DIR-B', 'Vespertino', 9, '30'),
+(6, 9, 6, 1, 'TURMA-DIR-C', 'Noturno', 10, '30'),
 
 -- 3. Gastronomia (Professores 7, 8 e 9)
-(7, 13, 7, 2, 'TURMA-GAS-A', 'Matutino', 12, '30',
-(8, 14, 8, 2, 'TURMA-GAS-B', 'Vespertino', 18, '30'),
-(9, 15, 9, 2, 'TURMA-GAS-C', 'Noturno', 0, '30'),
+(7, 13, 7, 1, 'TURMA-GAS-A', 'Matutino', 12, '30'),
+(8, 14, 8, 1, 'TURMA-GAS-B', 'Vespertino', 18, '30'),
+(9, 15, 9, 1, 'TURMA-GAS-C', 'Noturno', 0, '30'),
 
 -- 4. Engenharia Civil (Professores 10, 11 e 12)
-(10, 19, 10, 2, 'TURMA-ENG-A', 'Matutino', 19, '30'),
-(11, 20, 11, 2, 'TURMA-ENG-B', 'Vespertino', 6, '30'),
-(12, 21, 12, 2, 'TURMA-ENG-C', 'Noturno', 5, '30'),
-
+(10, 19, 10, 1, 'TURMA-ENG-A', 'Matutino', 19, '30'),
+(11, 20, 11, 1, 'TURMA-ENG-B', 'Vespertino', 6, '30'),
+(12, 21, 12, 1, 'TURMA-ENG-C', 'Noturno', 5, '30'),
+	
 -- 5. Medicina (Professores 13, 14 e 15)
-(13, 25, 13, 2, 'TURMA-MED-A', 'Integral', 10, '30'),
-(14, 26, 14, 2, 'TURMA-MED-B', 'Integral', 10, '30'),
-(15, 27, 15, 2, 'TURMA-MED-C', 'Integral', 10, '30'),
+(13, 25, 13, 1, 'TURMA-MED-A', 'Integral', 10, '30'),
+(14, 26, 14, 1, 'TURMA-MED-B', 'Integral', 10, '30'),
+(15, 27, 15, 1, 'TURMA-MED-C', 'Integral', 10, '30'),
 
 -- 6. Educação Física (Professores 16, 17 e 18)
-(16, 31, 16, 2, 'TURMA-EDF-A', 'Matutino', 17, '30'),
-(17, 32, 17, 2, 'TURMA-EDF-B', 'Vespertino', 13, '30'),
-(18, 33, 18, 2, 'TURMA-EDF-C', 'Noturno', 0, '30'),
+(16, 31, 16, 1, 'TURMA-EDF-A', 'Matutino', 17, '30'),
+(17, 32, 17, 1, 'TURMA-EDF-B', 'Vespertino', 13, '30'),
+(18, 33, 18, 1, 'TURMA-EDF-C', 'Noturno', 0, '30'),
 
 -- 7. Ciências Econômicas (Professores 19, 20 e 21)
-(19, 37, 19, 2, 'TURMA-ECO-A', 'Matutino', 15, '30'),
-(20, 38, 20, 2, 'TURMA-ECO-B', 'Vespertino', 14, '30'),
-(21, 39, 21, 2, 'TURMA-ECO-C', 'Noturno', 6, '30');
+(19, 37, 19, 1, 'TURMA-ECO-A', 'Matutino', 15, '30'),
+(20, 38, 20, 1, 'TURMA-ECO-B', 'Vespertino', 14, '30'),
+(21, 39, 21, 1, 'TURMA-ECO-C', 'Noturno', 6, '30');
 
 INSERT INTO tb_aluno (
     id_aluno, 
@@ -275,7 +275,7 @@ INSERT INTO tb_matricula (
 	status_matricula
 ) 
 SELECT 
-	i + 300,
+	i + 215,
 	i,
 CASE
 	WHEN i <= 10 THEN 21
@@ -296,7 +296,7 @@ INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_tu
 -- MATUTINO
 (1, 1, 1, 'Segunda', '08:15:00', '11:00:00'), 
 (2, 1, 1, 'Quarta',  '08:15:00', '11:00:00'),
-- VESPERTINO
+-- VESPERTINO
 (3, 2, 1, 'Segunda', '14:15:00', '17:00:00'), 
 (4, 2, 1, 'Quarta',  '14:15:00', '17:00:00'),
 -- NOTURNO
@@ -339,11 +339,11 @@ INSERT INTO tb_turma_horario (id_turma_horario, id_turma, id_sala, dia_semana_tu
 -- 5. Medicina
 -- INTEGRAL
 (25, 13, 5, 'Segunda', '08:15:00', '17:00:00'), 
-(26, 13, 5, 'Terça', '08:15:00', '17:00:00'),
-(27, 14, 5, 'Segunda',   '08:15:00', '17:00:00'), 
-(28, 14, 5, 'Terça',   '08:15:00', '17:00:00'),
-(29, 15, 5, 'Segunda',  '08:15:00', '17:00:00'), 
-(30, 15, 5, 'Terça',  '08:15:00', '17:00:00'),
+(26, 13, 5, 'Terça',   '08:15:00', '17:00:00'),
+(27, 14, 5, 'Quarta',  '08:15:00', '17:00:00'), 
+(28, 14, 5, 'Quinta',  '08:15:00', '17:00:00'),
+(29, 15, 5, 'Sexta',   '08:15:00', '17:00:00'), 
+(30, 15, 5, 'Sábado',  '08:15:00', '17:00:00'),
 
 -- 6. Educação Física
 -- MATUTINO
