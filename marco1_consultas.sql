@@ -37,11 +37,11 @@ ORDER BY total_alunos DESC;
 SELECT 
     d.codigo_disciplina, 
     d.nome_disciplina, 
-    COUNT(t.id_turma) AS total_turmas_ofertadas
+    COUNT(t.id_turma) AS total_turmas_por_disciplina
 FROM tb_disciplina d
 LEFT JOIN tb_turma t ON d.id_disciplina = t.id_disciplina 
 GROUP BY d.codigo_disciplina, d.nome_disciplina
-ORDER BY total_turmas_ofertadas ASC, d.nome_disciplina;
+ORDER BY total_turmas_por_disciplina ASC, d.nome_disciplina;
 
 
 -- CONSULTA 5: Cruzamento avançado com Subconsulta (Subquery)
