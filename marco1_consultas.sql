@@ -44,8 +44,9 @@ GROUP BY d.codigo_disciplina, d.nome_disciplina
 ORDER BY total_turmas_por_disciplina ASC, d.nome_disciplina;
 
 
--- CONSULTA 5: Cruzamento avançado com Subconsulta (Subquery)
--- Objetivo: Identificar alunos que atingiram média final superior à média geral.
+-- CONSULTA 5: Subconsulta Simples com Múltiplos INNER JOINs (5 tabelas).
+-- Objetivo: Identificar alunos que atingiram média final superior à média geral das disciplinas de Ciência da Computação.
+
 SELECT 
     a.matricula_aluno, 
     a.nome_aluno, 
@@ -56,11 +57,12 @@ INNER JOIN tb_matricula m ON h.id_matricula = m.id_matricula
 INNER JOIN tb_aluno a ON m.id_aluno = a.id_aluno
 INNER JOIN tb_turma t ON m.id_turma = t.id_turma
 INNER JOIN tb_disciplina d ON t.id_disciplina = d.id_disciplina
-WHERE h.media_final_historico > (
-    SELECT AVG(media_final_historico) 
-    FROM tb_historico 
-    WHERE media_final_historico IS NOT NULL
-)
+WHERE d.id_disciplina IN (1, 2, 3, 4) 
+  AND h.media_final_historico > (
+      SELECT AVG(media_final_historico) 
+      FROM tb_historico 
+      WHERE media_final_historico IS NOT NULL
+  )
 ORDER BY h.media_final_historico DESC;
 
 
