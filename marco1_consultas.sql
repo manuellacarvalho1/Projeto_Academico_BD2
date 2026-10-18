@@ -9,8 +9,8 @@ WHERE ativo_aluno = true
   AND id_curso = 1
 ORDER BY id_aluno ASC;
 
--- CONSULTA 2: INNER JOIN + Order By
--- Objetivo: Contar a quantidade de alunos matriculados por curso.
+-- CONSULTA 2: Agrupamento com GROUP BY
+-- Objetivo: Contar a quantidade de alunos matriculados por curso (Só aparece os cursos onde tem alunos matriculados).
 SELECT 
     c.nome_curso, 
     COUNT(a.id_aluno) AS total_alunos
@@ -21,20 +21,16 @@ GROUP BY c.nome_curso
 ORDER BY total_alunos DESC;
 
 
--- CONSULTA 3: INNER JOINs múltiplos + Filtro de Grupo (HAVING)
--- Objetivo: Encontrar currículos ativos cuja carga horária total exigida ultrapasse 300 horas.
+-- CONSULTA 3: LEFT JOIN para contar até os cursos vazios
+-- Objetivo: Contar a quantidade de alunos matriculados por curso (Aparece até os cursos onde não tem alunos matriculados).
 SELECT 
     c.nome_curso, 
-    cr.codigo_curriculo, 
-    SUM(d.ch_total_disciplina) AS carga_horaria_total
+    COUNT(a.id_aluno) AS total_alunos
 FROM tb_curso c
-INNER JOIN tb_curriculo cr ON c.id_curso = cr.id_curso
-INNER JOIN tb_curriculo_disciplina cd ON cr.id_curriculo = cd.id_curriculo
-INNER JOIN tb_disciplina d ON cd.id_disciplina = d.id_disciplina
-WHERE cr.ativo_curriculo = true
-GROUP BY c.nome_curso, cr.codigo_curriculo
-HAVING SUM(d.ch_total_disciplina) > 300
-ORDER BY carga_horaria_total DESC;
+LEFT JOIN tb_aluno a ON c.id_curso = a.id_curso AND a.ativo_aluno = true
+GROUP BY c.nome_curso
+ORDER BY total_alunos DESC;
+
 
 -- CONSULTA 4: Junção externa com agregação (LEFT JOIN)
 -- Objetivo: Listar TODAS as disciplinas cadastradas e quantas turmas já foram abertas para elas.
