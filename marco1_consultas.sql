@@ -1,16 +1,15 @@
 -- CONSULTA 1: Listagem simples (Filtro e Ordenação)
--- Objetivo: Listar todos os alunos ativos de um determinado curso ordenados por nome.
-SELECT 
-    matricula_aluno, 
-    nome_aluno, 
-    email_aluno 
-FROM tb_aluno 
-WHERE ativo_aluno = true 
-  AND id_curso = 1 
-ORDER BY nome_aluno ASC;
+-- Objetivo: Listar todos os alunos ativos de um determinado curso ordenados pelo ID (Como coloquei o ID com números de 1 a 215 e os nomes também, é como se tivesse ordenando por nome).
+SELECT
+    matricula_aluno,
+    nome_aluno,
+    email_aluno
+FROM tb_aluno
+WHERE ativo_aluno = true
+  AND id_curso = 1
+ORDER BY id_aluno ASC;
 
-
--- CONSULTA 2: Agrupamento Simples (GROUP BY)
+-- CONSULTA 2: INNER JOIN + Order By
 -- Objetivo: Contar a quantidade de alunos matriculados por curso.
 SELECT 
     c.nome_curso, 
