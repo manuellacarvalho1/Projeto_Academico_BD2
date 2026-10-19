@@ -67,8 +67,7 @@ ORDER BY h.media_final_historico DESC;
 
 
 -- CONSULTA 6: Função de janela com ranking e percentil (DENSE_RANK e PERCENT_RANK)
--- Objetivo: Criar um quadro de medalhas (ranking) e o percentil de desempenho dos alunos 
--- DENTRO de cada turma, ignorando empates na contagem.
+-- Objetivo: Criar um quadro de medalhas (ranking) e o percentil de desempenho dos alunos DENTRO de cada turma de cada curso, ignorando empates na contagem.
 SELECT 
     a.nome_aluno,
     t.codigo_turma,
