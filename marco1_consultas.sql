@@ -115,72 +115,63 @@ FROM MediaSemestral
 ORDER BY id_aluno, ano_periodo_letivo, semestre_periodo_letivo;
 
 
--- CONSULTA 8: Múltiplas CTEs estruturais
--- Objetivo: Isolar os cálculos de matriculados e reprovados para criar uma Taxa de Reprovação por disciplina.
-WITH TotalMatriculas AS (
-    SELECT t.id_disciplina, COUNT(m.id_matricula) AS total_alunos
-    FROM tb_matricula m
-    INNER JOIN tb_turma t ON m.id_turma = t.id_turma
-    GROUP BY t.id_disciplina
+-- CONSULTA 8: Múltiplas CTEs estruturais (Versão Simplificada)
+-- Objetivo: Usar duas CTEs simples para comparar o total de alunos com o total de aprovados por turma.
+
+WITH TotalNaTurma AS (
+    -- Primeira CTE: Quantos alunos existem em cada turma?
+    SELECT id_turma, COUNT(id_matricula) AS qtd_matriculas
+    FROM tb_matricula
+    GROUP BY id_turma
 ),
-Reprovacoes AS (
-    SELECT t.id_disciplina, COUNT(h.id_historico) AS total_reprovados
+AprovadosNaTurma AS (
+    -- Segunda CTE: Quantos alunos foram aprovados em cada turma?
+    SELECT m.id_turma, COUNT(h.id_historico) AS qtd_aprovados
     FROM tb_historico h
     INNER JOIN tb_matricula m ON h.id_matricula = m.id_matricula
-    INNER JOIN tb_turma t ON m.id_turma = t.id_turma
-    -- Assumindo que 'situacao_t' possui esses status ou equivalentes
-    WHERE h.situacao_historico::varchar IN ('Reprovado por Nota', 'Reprovado por Falta') 
-    GROUP BY t.id_disciplina
+    WHERE h.situacao_historico::varchar = 'Aprovado'
+    GROUP BY m.id_turma
 )
+-- Consulta Principal: Junta as duas caixas e mostra o resultado
 SELECT 
-    d.nome_disciplina,
-    tm.total_alunos,
-    COALESCE(r.total_reprovados, 0) AS total_reprovados,
-    ROUND((COALESCE(r.total_reprovados, 0) * 100.0) / tm.total_alunos, 2) AS taxa_reprovacao_pct
-FROM TotalMatriculas tm
-INNER JOIN tb_disciplina d ON tm.id_disciplina = d.id_disciplina
-LEFT JOIN Reprovacoes r ON tm.id_disciplina = r.id_disciplina
-ORDER BY taxa_reprovacao_pct DESC;
+    t.codigo_turma, 
+    d.nome_disciplina, 
+    tnt.qtd_matriculas, 
+    ant.qtd_aprovados
+FROM tb_turma t
+INNER JOIN tb_disciplina d ON t.id_disciplina = d.id_disciplina
+INNER JOIN TotalNaTurma tnt ON t.id_turma = tnt.id_turma
+INNER JOIN AprovadosNaTurma ant ON t.id_turma = ant.id_turma;
 
 
--- CONSULTA 9: Consulta recursiva para a árvore de pré-requisitos
--- Objetivo: Escolher uma disciplina final e buscar regressivamente toda a 
--- cadeia de pré-requisitos que o aluno precisa percorrer até chegar nela.
-WITH RECURSIVE ArvoreRequisitos AS (
-    -- CASO BASE: Quais são os pré-requisitos DIRETOS da disciplina que estou investigando?
-    SELECT 
-        pr.id_disciplina,
-        d.nome_disciplina AS disciplina_alvo,
-        pr.id_disciplina_requisito,
-        dr.nome_disciplina AS nome_requisito,
-        1 AS nivel_profundidade
-    FROM tb_pre_requisito pr
-    INNER JOIN tb_disciplina d ON pr.id_disciplina = d.id_disciplina
-    INNER JOIN tb_disciplina dr ON pr.id_disciplina_requisito = dr.id_disciplina
-    WHERE pr.id_disciplina = 99
+-- CONSULTA 9: Consulta recursiva para a árvore de pré-requisitos (Versão Simplificada)
+-- Objetivo: Ver todos os pré-requisitos necessários para cursar uma disciplina avançada (Ex: ID 10)
+
+WITH RECURSIVE BuscaRequisitos AS (
+    -- PASSO 1: A Âncora. Quais os pré-requisitos diretos da disciplina ID 10?
+    SELECT id_disciplina, id_disciplina_requisito
+    FROM tb_pre_requisito
+    WHERE id_disciplina = 10
     
     UNION ALL
     
-    -- PASSO RECURSIVO: Buscar os requisitos dos requisitos (o que eu preciso pra cursar o nível 1?)
-    SELECT 
-        pr.id_disciplina,
-        ar.nome_requisito AS disciplina_alvo,
-        pr.id_disciplina_requisito,
-        dr.nome_disciplina AS nome_requisito,
-        ar.nivel_profundidade + 1
+    -- PASSO 2: A Recursão. Buscar os requisitos dos requisitos que acabei de encontrar.
+    SELECT pr.id_disciplina, pr.id_disciplina_requisito
     FROM tb_pre_requisito pr
-    INNER JOIN ArvoreRequisitos ar ON pr.id_disciplina = ar.id_disciplina_requisito
-    INNER JOIN tb_disciplina dr ON pr.id_disciplina_requisito = dr.id_disciplina
+    INNER JOIN BuscaRequisitos br ON pr.id_disciplina = br.id_disciplina_requisito
 )
-SELECT * FROM ArvoreRequisitos ORDER BY nivel_profundidade, disciplina_alvo;
+-- PASSO 3: Depois de a recursão acabar, mostramos o nome de tudo o que foi encontrado.
+SELECT 
+    d.nome_disciplina AS nome_do_requisito_necessario
+FROM BuscaRequisitos br
+INNER JOIN tb_disciplina d ON br.id_disciplina_requisito = d.id_disciplina;
 
 
--- CONSULTA 10: Consulta recursiva para as disciplinas que um aluno JÁ PODE cursar
--- Objetivo: Obter todo o histórico aprovado de um aluno, navegar recursivamente pela árvore 
--- a partir do que ele já passou, e filtrar apenas as disciplinas que ele ainda não cursou e que 
--- NÃO POSSUEM mais nenhum requisito pendente.
-WITH RECURSIVE AprovacoesAluno AS (
-    -- 1. Pega todas as disciplinas que o Aluno de ID = 1 já concluiu (Âncora do grafo de aprovações)
+-- CONSULTA 10: Consulta recursiva para as disciplinas que um aluno pode cursar
+-- Objetivo: Olhar para as aprovações do Aluno 1 e ver que "caminhos" futuros ele desbloqueou.
+
+WITH RECURSIVE HistoricoAprovado AS (
+    -- PASSO 1: Guardar apenas os IDs das disciplinas onde o Aluno 1 já passou
     SELECT t.id_disciplina
     FROM tb_historico h
     INNER JOIN tb_matricula m ON h.id_matricula = m.id_matricula
@@ -188,33 +179,21 @@ WITH RECURSIVE AprovacoesAluno AS (
     WHERE m.id_aluno = 1 
       AND h.situacao_historico::varchar = 'Aprovado'
 ),
-TrilhaDependencias AS (
-    -- CASO BASE da Recursão: Quais disciplinas são "filhas" diretas do que o aluno já passou?
-    SELECT pr.id_disciplina, pr.id_disciplina_requisito
+TrilhaFutura AS (
+    -- PASSO 2: Âncora. O que é que o histórico aprovado libera imediatamente a seguir?
+    SELECT pr.id_disciplina
     FROM tb_pre_requisito pr
-    WHERE pr.id_disciplina_requisito IN (SELECT id_disciplina FROM AprovacoesAluno)
+    INNER JOIN HistoricoAprovado ha ON pr.id_disciplina_requisito = ha.id_disciplina
     
     UNION ALL
     
-    -- PASSO RECURSIVO: Avança na árvore de grafo simulando os caminhos futuros possíveis
-    SELECT pr.id_disciplina, tl.id_disciplina AS id_disciplina_requisito
+    -- PASSO 3: Recursão. O que é que as novas disciplinas vão liberar mais para a frente?
+    SELECT pr.id_disciplina
     FROM tb_pre_requisito pr
-    INNER JOIN TrilhaDependencias tl ON pr.id_disciplina_requisito = tl.id_disciplina
+    INNER JOIN TrilhaFutura tf ON pr.id_disciplina_requisito = tf.id_disciplina
 )
--- Validar as disciplinas da trilha
-SELECT DISTINCT d.codigo_disciplina, d.nome_disciplina
-FROM TrilhaDependencias td
-INNER JOIN tb_disciplina d ON td.id_disciplina = d.id_disciplina
-INNER JOIN tb_curriculo_disciplina cd ON d.id_disciplina = cd.id_disciplina
-INNER JOIN tb_aluno a ON cd.id_curriculo = a.id_curriculo
-WHERE a.id_aluno = 1
-  -- REGRA 1: O aluno ainda NÃO cursou essa disciplina
-  AND td.id_disciplina NOT IN (SELECT id_disciplina FROM AprovacoesAluno)
-  -- REGRA 2: NÃO EXISTE nenhum pré-requisito dessa disciplina que o aluno tenha deixado de cursar
-  AND NOT EXISTS (
-      SELECT 1 
-      FROM tb_pre_requisito pr2 
-      WHERE pr2.id_disciplina = td.id_disciplina 
-        AND pr2.id_disciplina_requisito NOT IN (SELECT id_disciplina FROM AprovacoesAluno)
-  )
-ORDER BY d.nome_disciplina;
+-- PASSO 4: Mostrar as disciplinas desbloqueadas, garantindo que removemos as que ele já fez.
+SELECT DISTINCT d.nome_disciplina AS proximas_disciplinas_disponiveis
+FROM TrilhaFutura tf
+INNER JOIN tb_disciplina d ON tf.id_disciplina = d.id_disciplina
+WHERE tf.id_disciplina NOT IN (SELECT id_disciplina FROM HistoricoAprovado);
