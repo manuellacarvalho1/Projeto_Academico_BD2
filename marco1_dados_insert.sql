@@ -146,7 +146,7 @@ INSERT INTO tb_professor (
 SELECT 
     i,
     'Professor ' || i,
-    'PROF' || i,
+    'PROF-' || i,
     LPAD(i::text, 11, '0'),
     'prof' || i || '@iesb.edu.br',
     '61999125' || LPAD(i::text, 2, '0'),
