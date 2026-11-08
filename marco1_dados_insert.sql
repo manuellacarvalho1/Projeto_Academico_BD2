@@ -397,11 +397,11 @@ SELECT
         WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN ROUND((0.4 * p1 + 0.6 * p2), 2)
         ELSE ROUND(GREATEST(0.4 * p3 + 0.6 * p2, 0.4 * p1 + 0.6 * p3), 2)
     END   
-FROM (
+FROM ( -- TABELA VIRTUAL TEMPORÁRIA -> NOTAS
     SELECT 
         i,
         ROUND((random() * 10)::numeric, 2) AS p1,
-        ROUND((random() * 10)::numeric, 2) AS p2,
+        ROUND((random() * 10)::numeric, 2) AS p2,           
         ROUND((random() * 10)::numeric, 2) AS p3,
         ROUND((random() * 30 + 70)::numeric, 2) AS frequencia
     FROM generate_series(1, 315) AS i
