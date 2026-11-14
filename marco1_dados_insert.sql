@@ -388,10 +388,10 @@ SELECT
     END,  
     frequencia,
     CASE 
-        WHEN frequencia < 75 THEN 'Reprovado por Falta'
+        WHEN frequencia < 75 THEN 'Reprovado por falta'
         WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN 'Aprovado'
         WHEN GREATEST(0.4 * p3 + 0.6 * p2, 0.4 * p1 + 0.6 * p3) >= 5.0 THEN 'Aprovado'
-        ELSE 'Reprovado por Nota'
+        ELSE 'Reprovado por nota'
     END::situacao_t,
     CASE 
         WHEN (0.4 * p1 + 0.6 * p2) >= 5.0 THEN ROUND((0.4 * p1 + 0.6 * p2), 2)
