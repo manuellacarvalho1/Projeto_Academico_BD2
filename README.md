@@ -15,4 +15,4 @@ real.
 
 **Integrantes**: Sophia Paulino, Manuella Carvalho, Gustavo Henrique
 
-**Data da Apresentação do Projeto**: 09/11/2026 ou 16/11/2026
+**Data da Apresentação do Projeto**: 16/11/2026
