@@ -219,11 +219,12 @@ CREATE TABLE tb_aluno (
 
 CREATE TABLE tb_matricula (
     id_matricula INT PRIMARY KEY,
-    id_aluno INT,
-    id_turma INT,
+    id_aluno INT NOT NULL,
+    id_turma INT NOT NULL,
     data_matricula DATE,
     status_matricula VARCHAR(20),
 
+    CONSTRAINT uq_aluno_turma UNIQUE (id_aluno, id_turma), -- chave alternativa: barra matrícula duplicada
     CONSTRAINT fk_matricula_aluno FOREIGN KEY (id_aluno) REFERENCES tb_aluno(id_aluno),
     CONSTRAINT fk_matricula_turma FOREIGN KEY (id_turma) REFERENCES tb_turma(id_turma)
 );
