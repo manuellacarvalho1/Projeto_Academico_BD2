@@ -93,5 +93,3 @@ INNER JOIN tb_aluno a ON m.id_aluno = a.id_aluno
 INNER JOIN tb_turma t ON m.id_turma = t.id_turma
 INNER JOIN tb_disciplina d ON t.id_disciplina = d.id_disciplina
 WHERE d.id_disciplina IN (3);
-
--- CONSULTA 7: Uma consulta recursiva para a árvore de pré-requisitos;
