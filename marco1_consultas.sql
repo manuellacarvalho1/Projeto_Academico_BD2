@@ -74,7 +74,7 @@ WHERE h.media_final_historico IS NOT NULL AND t.id_turma IN (1, 6, 11) -- Filtra
 ORDER BY t.codigo_turma, ranking_na_turma; 
 
 -- CONSULTA 6: Função de janela com LAG
--- Objetivo: Evolução do rendimento das notas dos alunos das disciplinas de Ciência da Computação.
+-- Objetivo: Evolução do rendimento das notas dos alunos da disciplina Banco de Dados II
 SELECT 
     a.nome_aluno,
     d.nome_disciplina,
