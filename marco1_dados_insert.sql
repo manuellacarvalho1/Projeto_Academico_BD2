@@ -134,7 +134,7 @@ INSERT INTO tb_pre_requisito (id_disciplina, id_disciplina_requisito, vinculo_pr
 INSERT INTO tb_periodo_letivo (id_periodo_letivo, ano_periodo_letivo, semestre_periodo_letivo, data_inicio_periodo_letivo, data_fim_periodo_letivo) VALUES
 (1, 2026, 2, '2026-08-01', '2026-11-30');
 
-INSERT INTO tb_professor (
+INSERT INTO tb_professor ( 
     id_professor, 
     nome_professor, 
     matricula_professor, 
@@ -143,13 +143,13 @@ INSERT INTO tb_professor (
     telefone_professor, 
     titulacao_professor
 )
-SELECT 
+SELECT -- Quando utilizamos um SELECT em um INSERT estamos fazendo uma inserção de dados a partir de uma consulta.
     i,
     'Professor ' || i,
     'PROF-' || i,
     LPAD(i::text, 11, '0'),
     'prof' || i || '@iesb.edu.br',
-    '61999125' || LPAD(i::text, 2, '0'),
+    '61999125' || LPAD(i::text, 2, '0'), -- utilizada para preencher uma string à esquerda (função de texto)
     'Mestre'
 FROM generate_series(1, 21) AS i;
 
@@ -400,11 +400,11 @@ SELECT
 FROM ( -- TABELA VIRTUAL TEMPORÁRIA -> NOTAS
     SELECT 
         i,
-        ROUND((random() * 10)::numeric, 2) AS p1,
+        ROUND((random() * 10)::numeric, 2) AS p1, -- A função random() gera um número aleatório maior ou igual a 0 e menor que 1.
         ROUND((random() * 10)::numeric, 2) AS p2,           
         ROUND((random() * 10)::numeric, 2) AS p3,
-        ROUND((random() * 30 + 70)::numeric, 2) AS frequencia
-    FROM generate_series(1, 315) AS i
+        ROUND((random() * 30 + 70)::numeric, 2) AS frequencia -- mutiplica-se o número por 30 e soma com 70, assim a frequência gerada estará entre 70% e praticamente 100%.
+    FROM generate_series(1, 315) AS i -- gera uma sequência de números
 ) AS notas;
 
 		
